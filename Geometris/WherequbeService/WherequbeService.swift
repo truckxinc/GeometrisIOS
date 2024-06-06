@@ -365,6 +365,14 @@ extension WherequbeService: WQSmartServiceDelegate {
         if poweredOn && autoReconnect && state == .reconnecting {
             wqSmartService.reconnect()
         }
+
+        if state == .connected && poweredOn == false  {
+          print("Disconnecting since bluetooth was turned off")
+          // change status to idle if device was connected and bluetooth was turned off,
+          // otherwise will get stuck here and wont be able to reconnect even when bluetooth is turned on.
+          state = .idle
+        }
+
         delegate?.wherequbeService(self, bluetoothChangedState: poweredOn)
     }
 }
