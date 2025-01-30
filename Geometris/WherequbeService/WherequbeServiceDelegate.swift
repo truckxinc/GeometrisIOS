@@ -47,8 +47,9 @@ import Foundation
      - Parameters:
      - wherequbeService: delegator object
      - whereqube: device that disconnected
+     - reason: Why device was disconnected. Gives you .debugDescription of error thrown by centralManager
      */
-    func wherequbeService(_ wherequbeService: WherequbeService, didDisconnect whereqube: Whereqube)
+    func wherequbeService(_ wherequbeService: WherequbeService, didDisconnect whereqube: Whereqube, reason: String)
     
     /**
      Device has sent a preiodic event
