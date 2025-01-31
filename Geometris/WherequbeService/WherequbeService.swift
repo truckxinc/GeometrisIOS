@@ -298,7 +298,7 @@ extension WherequbeService: WQSmartServiceDelegate {
         }
     }
     
-    func wqsmartservice(_ wqSmartService: WQSmartService, didDisconnect whereqube: CBPeripheral) {
+    func wqsmartservice(_ wqSmartService: WQSmartService, didDisconnect whereqube: CBPeripheral, reason: String) {
         switch (state) {
         case .connecting, .reconnecting:
             state = .idle
@@ -320,7 +320,7 @@ extension WherequbeService: WQSmartServiceDelegate {
             state = .disconnected
             state = .idle
         }
-        delegate?.wherequbeService(self, didDisconnect: Whereqube(name: whereqube.name, uuid: whereqube.identifier.uuidString))
+        delegate?.wherequbeService(self, didDisconnect: Whereqube(name: whereqube.name, uuid: whereqube.identifier.uuidString), reason: reason)
     }
     
     func wqsmartservice(_ wqSmartService: WQSmartService, didDiscoverServices whereqube: CBPeripheral){
@@ -366,7 +366,7 @@ extension WherequbeService: WQSmartServiceDelegate {
             wqSmartService.reconnect()
         }
 
-        if state == .connected && poweredOn == false  {
+        if state == .connected && poweredOn == false {
           print("Disconnecting since bluetooth was turned off")
           // change status to idle if device was connected and bluetooth was turned off,
           // otherwise will get stuck here and wont be able to reconnect even when bluetooth is turned on.

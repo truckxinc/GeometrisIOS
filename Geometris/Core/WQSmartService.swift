@@ -24,7 +24,7 @@ protocol WQSmartServiceDelegate {
     func wqsmartservice(_ wqSmartService: WQSmartService, didDiscover whereqube: CBPeripheral, didReadRSSI RSSI: NSNumber)
     func wqsmartservice(_ wqSmartService: WQSmartService, didConnect whereqube: CBPeripheral)
     func wqsmartservice(_ wqSmartService: WQSmartService, didFailToConnect whereqube: CBPeripheral)
-    func wqsmartservice(_ wqSmartService: WQSmartService, didDisconnect whereqube: CBPeripheral)
+    func wqsmartservice(_ wqSmartService: WQSmartService, didDisconnect whereqube: CBPeripheral, reason: String)
     func wqsmartservice(_ wqSmartService: WQSmartService, didDiscoverServices whereqube: CBPeripheral)
     func wqsmartservice(_ wqSmartService: WQSmartService, didReceiveCharacters message: String)
     func wqsmartservice(_ wqSmartService: WQSmartService, didReceiveGeoData geoResponse:GeoResponse)
@@ -230,8 +230,8 @@ class WQSmartService: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
  }
     
     func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
-        print("disconnected")
-        delegate?.wqsmartservice(self, didDisconnect: peripheral)
+        print("centralManager-didDisconnectPeripheral -- ", error.debugDescription)
+        delegate?.wqsmartservice(self, didDisconnect: peripheral, reason: error.debugDescription)
     }
     
     
